@@ -9,9 +9,7 @@ use Config::ENV 'PLACK_ENV';
 
 my $path = sprintf "%s/../../", dirname(__FILE__);
 
-config development => +{
-    load("$path/config/development.pl"),
-};
+common load("$path/config/development.pl");
 
 =put
 
