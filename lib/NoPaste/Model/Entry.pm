@@ -32,7 +32,7 @@ sub retrieve_multi_by_page {
     my $is_short_body = $args->{is_short_body};
 
     my $offset;
-    if ($page == 1 || !$page) {
+    if (!$page || $page == 1) {
         $offset = 0;
     }
     else {
@@ -40,7 +40,7 @@ sub retrieve_multi_by_page {
     }
 
     my $entries = $self->db->select_all(
-        'SELECT * FROM entries ORDER BY id LIMIT ? OFFSET ?',
+        'SELECT * FROM entries ORDER BY id DESC LIMIT ? OFFSET ?',
         ROWS, $offset
     );
 
@@ -52,7 +52,7 @@ sub retrieve_multi_by_page {
     return {
         entries => $is_short_body ? $compile_entries : $entries,
         page    => {
-            prev => $page - 1 <= 0 ? undef : $page - 1,
+            prev => (!$page || $page - 1 <= 0) ? undef : $page - 1,
             next => scalar(@$entries) < ROWS ? undef : $page + 1,
         },
     }

@@ -128,5 +128,4 @@ subtest '_compile_entry_to_short_body' => sub {
     cmp_deeply $long_result, { body => 'a'x NoPaste::Model::Entry::SHORT_BODY_MAX_LENGTH."..." };
 };
 
-
 done_testing;
