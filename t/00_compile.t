@@ -7,6 +7,9 @@ use_ok $_ for qw(
     NoPaste::Web
     NoPaste::Config
     NoPaste::Type
+    NoPaste::Model
+    NoPaste::Model::Entry
+    NoPaste::Util
 );
 
 done_testing;
