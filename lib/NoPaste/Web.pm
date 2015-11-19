@@ -5,33 +5,72 @@ use strict;
 use warnings;
 use utf8;
 use Kossy;
+use NoPaste::Model;
 
-filter 'set_title' => sub {
-    my $app = shift;
-    sub {
-        my ( $self, $c )  = @_;
-        $c->stash->{site_name} = __PACKAGE__;
-        $app->($self,$c);
+sub model {
+    state $model = NoPaste::Model->new();
+    return $model;
+}
+
+get '/' => sub {
+    my ($self, $c) = @_;
+    $c->render('index.tx', { greeting => 'Hello' });
+};
+
+post '/' => sub {
+    my ($self, $c) = @_;
+    my $uuid;
+    eval {
+        my $title = $c->req->param('title');
+        my $body  = $c->req->param('body');
+
+        $uuid = model->entry_model->register(
+            title => $title,
+            body  => $body
+        );
+    };
+    if (my $error = $@) {
+        # エラーログを収集する場合はそちらに投げるようにする
+        warn $error;
+        $c->halt(500, "Internal Server Error");
+    }
+    else {
+        $c->redirect("/entries/$uuid");
     }
 };
 
-get '/' => [qw/set_title/] => sub {
-    my ( $self, $c )  = @_;
-    $c->render('index.tx', { greeting => "Hello" });
+get '/entries' => sub {
+    my ($self, $c) = @_;
+
+    my $entries = [];
+    eval {
+        my $page = $c->req->param('page');
+        $entries = model->entry_model->retrieve_multi_by_page($page);
+    };
+    if (my $error = $@) {
+        warn $error;
+        $c->halt(500, "Internal Server Error");
+    }
+    else {
+        $c->render('entries.tx', { entries => $entries });
+    }
 };
 
-get '/json' => sub {
-    my ( $self, $c )  = @_;
-    my $result = $c->req->validator([
-        'q' => {
-            default => 'Hello',
-            rule => [
-                [['CHOICE',qw/Hello Bye/],'Hello or Bye']
-            ],
-        }
-    ]);
-    $c->render_json({ greeting => $result->valid->get('q') });
+# uuidは推測されにくいようにランダムでかつuniqueなものにする
+get '/entries/:uuid' => sub {
+    my ($self, $c) = @_;
+    my $entry;
+    eval {
+        my $uuid = $c->args->{uuid};
+        $entry = model->entry_model->retrieve_by_uuid($uuid);
+    };
+    if (my $error = $@) {
+        warn $error;
+        $c->halt(500, "Internal Server Error");
+    }
+    else {
+        $c->render('entry.tx', { entry => $entry });
+    }
 };
 
 1;
-
