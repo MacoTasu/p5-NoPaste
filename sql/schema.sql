@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS `entries`;
 
 CREATE TABLE `entries` (
   `id` INTEGER unsigned NOT NULL auto_increment,
-  `uuid` VARCHAR(191) NOT_NULL,
+  `uuid` VARCHAR(191) NOT NULL,
   `title` VARCHAR(120) DEFAULT '',
   `body` TEXT(10000) NOT NULL,
   `created_at` datetime NOT NULL,
