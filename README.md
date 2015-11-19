@@ -2,26 +2,26 @@
 
 ## Description
 
-NoPaste Application, written by perl5;
+NoPaste Application, written by perl5.
 
 ## Install
 
-1. create database
+1.create database
 ```sql
 mysql> create database no_paste;
 ```
 
-2. migrate
+2.migrate
 ```bash
 $mysql -uroot no_paste < sql/schema.sql
 ```
 
-3. cpanm install
+3.cpanm install
 ```bash
 $cpanm --installdeps .
 ```
 
-4. plackup
+4.plackup
 ```bash
 $plackup app.psgi
 ```
