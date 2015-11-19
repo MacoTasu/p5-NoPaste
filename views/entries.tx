@@ -12,7 +12,7 @@
 </nav>
 : for $entries -> $entry {
 <div class="entry">
-  <h5><: $entry.title :></h5>
+  <h4><: $entry.title :></h4>
   <pre><: $entry.body :><br><a href="/entries/<: $entry.uuid :>" >詳細へ</a></pre>
   <p class="text-right">created_at: <: $entry.created_at :></p>
 </div>

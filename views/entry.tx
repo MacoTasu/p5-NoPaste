@@ -1,7 +1,7 @@
 : cascade base
 : around content -> {
 <div class="entry">
-  <h5><: $entry.title :></h5>
+  <h4><: $entry.title :></h4>
   <pre><: $entry.body :></pre>
   <p class="text-right">created_at: <: $entry.created_at :></p>
 </div>
