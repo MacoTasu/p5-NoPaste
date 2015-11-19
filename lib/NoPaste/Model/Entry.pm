@@ -44,7 +44,7 @@ sub retrieve_multi_by_page {
         ROWS, $offset
     );
 
-    my $compile_entries;
+    my $compile_entries = [];
     if ($is_short_body) {
         $compile_entries = $self->_compile_entries_to_short_body($entries);
     }
@@ -72,7 +72,7 @@ sub _compile_entries_to_short_body {
 sub _compile_entry_to_short_body {
     my ($self, $entry) = @_;
     my $body = $entry->{body};
-    return $entry if (length($body) < SHORT_BODY_MAX_LENGTH);
+    return $entry if (length($body) <= SHORT_BODY_MAX_LENGTH);
     return {
         %{$entry},
         body => sprintf("%s...", substr($body, 0, SHORT_BODY_MAX_LENGTH)),

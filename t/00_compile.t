@@ -10,6 +10,7 @@ use_ok $_ for qw(
     NoPaste::Model
     NoPaste::Model::Entry
     NoPaste::Util
+    NoPaste::Test
 );
 
 done_testing;
