@@ -8,7 +8,7 @@ use utf8;
 use NoPaste::Type;
 use Data::Validator;
 use NoPaste::Util;
-use constant ROWS => 20;
+use constant ROWS => 10;
 
 use Mouse;
 
@@ -34,10 +34,18 @@ sub retrieve_multi_by_page {
         $offset = ($page - 1) * ROWS;
     }
 
-    return $self->db->select_all(
+    my $entries = $self->db->select_all(
         'SELECT * FROM entries ORDER BY id LIMIT ? OFFSET ?',
         ROWS, $offset
     );
+
+    return {
+        entries => $entries,
+        page    => {
+            prev => $page - 1 <= 0 ? undef : $page - 1,
+            next => scalar(@$entries) < ROWS ? undef : $page + 1,
+        },
+    }
 }
 
 sub retrieve_by_uuid {

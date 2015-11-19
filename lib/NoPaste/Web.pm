@@ -42,17 +42,18 @@ post '/' => sub {
 get '/entries' => sub {
     my ($self, $c) = @_;
 
-    my $entries = [];
+    my $entries_info;
+    my $page = 1;
     eval {
-        my $page = $c->req->param('page');
-        $entries = model->entry_model->retrieve_multi_by_page($page);
+        $page = $c->req->param('page');
+        $entries_info = model->entry_model->retrieve_multi_by_page($page);
     };
     if (my $error = $@) {
         warn $error;
         $c->halt(500, "Internal Server Error");
     }
     else {
-        $c->render('entries.tx', { entries => $entries });
+        $c->render('entries.tx', $entries_info);
     }
 };
 
