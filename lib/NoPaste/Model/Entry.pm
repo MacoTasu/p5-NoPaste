@@ -60,10 +60,13 @@ sub register {
     my $title = $args->{title};
     my $body = $args->{body};
 
-    return $self->db->query(
+    my $uuid = NoPaste::Util::generate_uuid;
+    $self->db->query(
         'INSERT INTO entries (title, body, uuid, created_at) VALUES (?, ?, ?, NOW())',
-        $args->{title}, $args->{body}, NoPaste::Util::generate_uuid
+        $args->{title}, $args->{body}, $uuid
     );
+
+    return $uuid;
 }
 
 1;
