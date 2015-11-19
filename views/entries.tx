@@ -1,0 +1,20 @@
+: cascade base
+: around content -> {
+<nav>
+  <ul class="pager">
+: if($page.prev != nil) {   
+    <li class="previous" ><a href="/entries?page=<: $page.prev :>" >Previous</a></li>
+: }
+: if($page.next != nil) {   
+    <li class="next" ><a href="/entries?page=<: $page.next :>" >Next</a></li>
+: }
+  </ul>
+</nav>
+: for $entries -> $entry {
+<div class="entry">
+  <h5><: $entry.title :></h5>
+  <pre><: $entry.body :><br><a href="/entries/<: $entry.uuid :>" >詳細へ</a></pre>
+  <p class="text-right">created_at: <: $entry.created_at :></p>
+</div>
+: }
+: } 
