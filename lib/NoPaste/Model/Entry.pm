@@ -21,6 +21,8 @@ has db => (
     required => 1,
 );
 
+no Mouse;
+
 sub retrieve_multi_by_page {
     my $self = shift;
     state $rule = Data::Validator->new(
