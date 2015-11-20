@@ -14,7 +14,7 @@ sub model {
 
 get '/' => sub {
     my ($self, $c) = @_;
-    $c->render('index.tx', { greeting => 'Hello' });
+    $c->render('index.tx');
 };
 
 post '/' => sub {

@@ -10,6 +10,7 @@
     <div class="col-md-10 input-group">
       <h4>Text<h4>
       <textarea class="form-control" type="textarea" rows="10" name="body"" maxlength="10000"></textarea>
+      <p class="help-block">*Please write in less than 10000 characters</p>
     </div>
     <div class="col-md-1 input-group">
       <input class="btn btn-default" type="submit" name="Submit" value="Submit" />
