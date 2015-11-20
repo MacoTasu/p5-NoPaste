@@ -46,7 +46,7 @@ get '/entries' => sub {
     eval {
         my $page = $c->req->param('page');
         $entries_with_page = model->entry_model->retrieve_multi_by_page(
-            page          => $page,
+            $page ? (page => $page) : (),
             is_short_body => 1,
         );
     };
