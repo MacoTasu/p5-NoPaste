@@ -42,6 +42,9 @@ post '/' => sub {
 get '/entries' => sub {
     my ($self, $c) = @_;
 
+    # 現状必要ないので404を返す
+    $c->halt(404, "Not Found");
+
     my $entries_with_page;
     eval {
         my $page = $c->req->param('page');

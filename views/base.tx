@@ -25,7 +25,7 @@ body {
 <a class="brand" href="<: $c.req.uri_for('/') :>">NoPaste</a>
 <div class="nav-collapse">
 <ul class="nav">
-<li><a href="<: $c.req.uri_for('/entries') :>">Entries</a></li>
+<!--li><a href="<: $c.req.uri_for('/entries') :>">Entries</a></li-->
 </ul>
 </div> <!--/.nav-collapse -->
 </div>
