@@ -1,16 +1,6 @@
-box: debian
+box: moltar/plenv@0.1.1
 build:
   steps:
-        - script:
-          name: install curl
-          code: |
-                sudo apt-get update -y
-                sudo apt-get install curl -y
-        - moltar/plenv:
-          version: 5.20.0
-        - moltar/carton-install@0.3.0:
-          without: develop
-          cache_local: false
         - script:
           name: prove
           code: |
